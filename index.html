@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Valentine Surprise ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow-x: hidden;
+    }
+
+    .card {
+      background: #fff;
+      width: min(92%, 420px);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,.15);
+      position: relative;
+    }
+
+    h1 {
+      margin-top: 0;
+      color: #ff3b7a;
+      font-size: 1.9rem;
+    }
+
+    p { color: #444; }
+
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      position: relative;
+    }
+
+    button {
+      border: none;
+      padding: 12px 22px;
+      font-size: 1rem;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,.15);
+    }
+
+    #yesBtn {
+      background: #ff3b7a;
+      color: #fff;
+    }
+
+    #noBtn {
+      background: #eee;
+      color: #444;
+      position: relative;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.2);
+    }
+
+    /* Success section */
+    #successSection {
+      display: none;
+      margin-top: 20px;
+    }
+
+    #successSection.show {
+      display: block;
+      animation: pop .5s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(.9); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Envelope */
+    .envelope {
+      width: 140px;
+      height: 90px;
+      margin: 18px auto;
+      background: #ff6b9d;
+      position: relative;
+      border-radius: 6px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .envelope::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 50%, #ff8fab 50%);
+      clip-path: polygon(0 0, 100% 0, 50% 50%);
+    }
+
+    .letter {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: -100%;
+      background: #fff;
+      border-radius: 6px;
+      padding: 10px;
+      font-size: .9rem;
+      transition: bottom .5s ease;
+    }
+
+    .envelope.open .letter {
+      bottom: 10px;
+    }
+
+    /* Surprise buttons */
+    .surprise {
+      margin-top: 14px;
+    }
+
+    .surprise-btn {
+      background: #ffd1e6;
+      color: #ff3b7a;
+      font-size: .9rem;
+      padding: 8px 14px;
+      border-radius: 20px;
+      box-shadow: none;
+    }
+
+    .surprise-text {
+      display: none;
+      margin-top: 6px;
+      font-size: .9rem;
+      color: #333;
+    }
+
+    .surprise-text.show {
+      display: block;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      top: -10px;
+      width: 8px;
+      height: 12px;
+      opacity: .9;
+      animation: fall 3s linear forwards;
+      z-index: 9999;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Will you be my Valentine? 💖</h1>
+    <p>I made this just for you…</p>
+
+    <div class="buttons" id="buttonContainer">
+      <button id="yesBtn">YES ❤️</button>
+      <button id="noBtn">NO 🙈</button>
+    </div>
+
+    <div id="successSection">
+      <h2>Yayyy! 🥹💞</h2>
+      <p>You just made my heart so happy.</p>
+
+      <div class="envelope" id="envelope">
+        <div class="letter">
+          <strong>My Love,</strong><br/>
+          Thank you for choosing me.  
+          I promise lots of smiles, care, and love 💕
+        </div>
+      </div>
+
+      <div class="surprise">
+        <button class="surprise-btn">Tap for a surprise ✨</button>
+        <div class="surprise-text">
+          I love you more than words can say 💖
+        </div>
+      </div>
+
+      <div class="surprise">
+        <button class="surprise-btn">One more… 😌</button>
+        <div class="surprise-text">
+          You are my favourite person 🫶
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const yesBtn = document.getElementById("yesBtn");
+    const noBtn = document.getElementById("noBtn");
+    const successSection = document.getElementById("successSection");
+    const buttonContainer = document.getElementById("buttonContainer");
+    const envelope = document.getElementById("envelope");
+
+    yesBtn.addEventListener("click", () => {
+      successSection.classList.add("show");
+      buttonContainer.style.display = "none";
+
+      for (let i = 0; i < 40; i++) {
+        const confetti = document.createElement("div");
+        confetti.className = "confetti";
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background =
+          ["#FF6B9D", "#FFB3D9", "#FF8FAB"][Math.floor(Math.random() * 3)];
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 3000);
+      }
+    });
+
+    noBtn.addEventListener("mouseenter", () => {
+      const x = Math.random() * 250 - 125;
+      const y = Math.random() * 120 - 60;
+      noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    });
+
+    envelope.addEventListener("click", () => {
+      envelope.classList.toggle("open");
+    });
+
+    document.querySelectorAll(".surprise-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        btn.nextElementSibling.classList.toggle("show");
+      });
+    });
+  </script>
+
+</body>
+  </html>
